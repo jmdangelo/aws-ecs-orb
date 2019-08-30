@@ -301,6 +301,7 @@ commands:
             revision has reached its desired running task count and is the only
             one deployed for the service.
           command: |
+            source $BASH_ENV
             if [ "<< parameters.task-definition-arn >>" = "" ]; then
                 echo "Invalid task-definition-arn parameter value: << parameters.task-definition-arn >>"
                 exit 1
@@ -431,6 +432,7 @@ commands:
       - run:
           name: Register new task definition
           command: |
+            source $BASH_ENV
             if [ -n "${CCI_ORB_AWS_ECS_TASK_ROLE}" ]; then
                 set -- "$@" --task-role-arn "${CCI_ORB_AWS_ECS_TASK_ROLE}"
             fi
@@ -550,6 +552,7 @@ commands:
       - run:
           name: Update service with registered task definition
           command: |
+            source $BASH_ENV
             SERVICE_NAME="$(echo << parameters.service-name >>)"
 
             if [ -z "${SERVICE_NAME}" ]; then
